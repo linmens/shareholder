@@ -51,7 +51,7 @@ export default {
 
     return {
       value13: '',
-
+      all_touzi: '',
       formItem: {
 
         input: '',
@@ -104,7 +104,7 @@ export default {
 
 
         this.gudong = response.body;
-
+  this.all_touzi = response.body.all;
       }, response => {
         // error callback
       });
@@ -114,14 +114,6 @@ export default {
   },
   mounted() {
     this.getgudong();
-    this.$http.get('http://shareholder.a10store.com/api/get_shares_percent_detail.php').then(response => {
-
-
-      this.all_touzi = response.body.all_touzi;
-
-    }, response => {
-      // error callback
-    });
   }
 
 }
