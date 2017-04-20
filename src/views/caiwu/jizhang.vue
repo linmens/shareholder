@@ -21,7 +21,7 @@
             <Col span="4" class="shuju">
             <span style="color:#657180">支出</span>
                 <div class="income"><Icon type="minus"></Icon> <span >{{jsonBody.expenditure_all}}</span></div>
-               
+
             </Col>
             <Col span="4">
               <span style="color:#657180">收入</span>
@@ -32,7 +32,7 @@
                  <div class="income" style="font-size:30px;color:#464c5b"><Icon type="plus"></Icon> <span >{{jsonBody.balance}}</span></div>
             </Col>
         </Row>
-    
+
         <!--列表-->
         <Row>
             <Col span="24">
@@ -41,7 +41,7 @@
                 <Button type="error" @click="batchRemove" :disabled="this.sels.length===0"><Icon type="trash-a"></Icon>批量删除</Button>
                 <Page @on-change="handleCurrentChange" :total="total" style="float:right;" show-sizer></Page>
             </div>
-    
+
             <br>
             </Col>
         </Row>
@@ -61,7 +61,7 @@
         <div  class="entry-icon"  @click="changeicon(icon)"></div>
         <span class="entry-category-title">{{icon.type}}</span>
         </li>
-        
+
     </ul>
     </div>
       <Form-item>
@@ -81,7 +81,7 @@
         <Form-item >
            <Input v-model="formItem.input" type="textarea" :rows="4" placeholder="备注"></Input>
         </Form-item>
- 
+
         <div class="entry-involve-set">
 <div class="involve-view">
 <div class="involve-header"> <span>参与者</span> </div>
@@ -93,17 +93,17 @@
         </Col>
     </Row>
 <ul class="involve-members clearfix">
-<li class="involve-member hinted" data-id="568b4a7714b9148c08fd15db" data-title="linmens，创建者"> 
- </li> 
+<li class="involve-member hinted" data-id="568b4a7714b9148c08fd15db" data-title="linmens，创建者">
+ </li>
  </ul>
  </div>
- 
+
  </div>
-   
+
  </Form>
         </div>
-      
-  
+
+
 
         <div slot="footer">
             <Button type="info" size="large" long >创建</Button>
@@ -114,26 +114,26 @@ right: 15px;" id="popover283313">
          <div class="popover-content thin-scroll"><div class="menu-input add-form"> <input class="add-input form-control" v-model="pushNewmenu" placeholder="添加类型">
           <button class="btn btn-link link-add-handler" @click="addNewmenu()">添加</button></div>
           <ul class="list-unstyled thin-scroll with-input">
-          <li class="menu-item " @click="selectedMenu(item,$index)"  v-for="(item,$index) in menuitem" :class="{selected:item.menuitemActive }"> <a>{{item.text}}</a>  
+          <li class="menu-item " @click="selectedMenu(item,$index)"  v-for="(item,$index) in menuitem" :class="{selected:item.menuitemActive }"> <a>{{item.text}}</a>
           <Icon type="checkmark" class="icon-selected" v-show="item.menuitemActive"></Icon></li>
          </ul>
           </div></div>
-          <div class="popover member-menu-view bottom in" v-if="isMemberPop" id="popover195322" style="width: 245px; z-index: 999; top: 150px;"> 
+          <div class="popover member-menu-view bottom in" v-if="isMemberPop" id="popover195322" style="width: 245px; z-index: 999; top: 150px;">
            <div class="popover-content thin-scroll">
-          <div class="menu-input"> 
-          <input class="filter-input form-control" placeholder="查找成员"></div><ul class="list-unstyled thin-scroll">   
-          <li class="member-item all active"> <a data-gta="event" data-label="involve all members"> <span class="icon icon-users icon-gray"></span> 所有成员 </a> </li>   
-           <li class="member-item one hinted selected" data-id="568b4a7714b9148c08fd15db" data-title="linmens"> <a> 
-           <div class="avatar img-circle" style="background-image:url(https://striker.teambition.net/thumbnail/110c368fba8ff41a064151f70ca78c81e561/w/200/h/200);"></div> 
-           <span>linmens</span> </a> 
+          <div class="menu-input">
+          <input class="filter-input form-control" placeholder="查找成员"></div><ul class="list-unstyled thin-scroll">
+          <li class="member-item all active"> <a data-gta="event" data-label="involve all members"> <span class="icon icon-users icon-gray"></span> 所有成员 </a> </li>
+           <li class="member-item one hinted selected" data-id="568b4a7714b9148c08fd15db" data-title="linmens"> <a>
+           <div class="avatar img-circle" style="background-image:url(https://striker.teambition.net/thumbnail/110c368fba8ff41a064151f70ca78c81e561/w/200/h/200);"></div>
+           <span>linmens</span> </a>
            <Icon type="checkmark" class="icon-selected"></Icon>
-           </li>    
-           <li class="member-item one hinted" data-id="568b52ad3fef5c57171d08a1" data-title="Cmi"> <a> 
-           <div class="avatar img-circle" style="background-image:url(https://striker.teambition.net/thumbnail/110cd08dd69c864236237f5c69abeb893469/w/200/h/200);"></div> 
-           <span>Cmi</span> </a> </li>    <li class="member-item one hinted" data-id="568b4b6682513af65965d956" data-title="Ein"> <a> 
-           <div class="avatar img-circle" style="background-image:url(https://striker.teambition.net/thumbnail/110j00f79aed0893d573b233de33f43994c9/w/200/h/200);"></div> 
+           </li>
+           <li class="member-item one hinted" data-id="568b52ad3fef5c57171d08a1" data-title="Cmi"> <a>
+           <div class="avatar img-circle" style="background-image:url(https://striker.teambition.net/thumbnail/110cd08dd69c864236237f5c69abeb893469/w/200/h/200);"></div>
+           <span>Cmi</span> </a> </li>    <li class="member-item one hinted" data-id="568b4b6682513af65965d956" data-title="Ein"> <a>
+           <div class="avatar img-circle" style="background-image:url(https://striker.teambition.net/thumbnail/110j00f79aed0893d573b233de33f43994c9/w/200/h/200);"></div>
            <span>Ein</span> </a> </li>    <li class="member-item one hinted" data-id="5792f87dec1f5cd77d3352fc" data-title="linmens"> <a>
-            <div class="avatar img-circle" style="background-image:url(https://striker.teambition.net/thumbnail/110i7be1003a7adac13a375dca583013ab33/w/100/h/100);"></div> <span>linmens</span> </a> </li> 
+            <div class="avatar img-circle" style="background-image:url(https://striker.teambition.net/thumbnail/110i7be1003a7adac13a375dca583013ab33/w/100/h/100);"></div> <span>linmens</span> </a> </li>
             </ul></div></div>
     </Modal>
         <Modal v-model="addFormVisible" title="添加入库单" width="1200" class-name="vertical-center-modal">
@@ -158,15 +158,15 @@ right: 15px;" id="popover283313">
                     </Form-item>
                 </Form>
                 </Col>
-    
+
             </Row>
             <Row>
                 <Col span="5">
                 <Input v-model="SaoMa" placeholder="扫码入库" style="width: 300px;margin-bottom: 10px;"></Input>{{ answer }}
                 </Col>
             </Row>
-           
-    
+
+
         </Modal>
     </section>
 </template>
@@ -284,12 +284,12 @@ right: 15px;" id="popover283313">
                         type: 'index',
                         width: 60,
                         align: 'center',
-    
-    
+
+
                     }, {
                         title: '品牌',
                         key: 'name',
-    
+
                     }, {
                         title: '产品编号',
                         key: 'bianhao'
@@ -321,9 +321,9 @@ right: 15px;" id="popover283313">
                         title: '库存',
                         key: 'kucun'
                     }
-    
+
                 ],
-    
+
                 formInline: {
                     ruku_beizhu: '',
                     rukudanhao: '',
@@ -347,7 +347,7 @@ right: 15px;" id="popover283313">
                         trigger: 'blur'
                     }]
                 },
-    
+
                 yewu_options: [{
                     value: 'all',
                     label: '全部'
@@ -376,7 +376,7 @@ right: 15px;" id="popover283313">
                 page: 1,
                 listLoading: false,
                 sels: [], //列表选中列
-    
+
                 editFormVisible: false, //编辑界面是否显示
                 editLoading: false,
                 editFormRules: {
@@ -394,7 +394,7 @@ right: 15px;" id="popover283313">
                     guige: '',
                     pic: '',
                 },
-    
+
                 addFormVisible: false, //新增界面是否显示
                 addLoading: false,
                 addFormRules: {
@@ -416,14 +416,14 @@ right: 15px;" id="popover283313">
             SaoMa: function(newQuestion, old) {
                 // console.log('new'+newQuestion);
                 // console.log('old'+old);
-    
+
                 if (newQuestion == "") {
                     return
                 }
                 this.senDsaoma()
-    
-    
-    
+
+
+
             }
         },
         methods: {
@@ -431,10 +431,10 @@ right: 15px;" id="popover283313">
                 console.log(row)
             },
             changeicon(e){
-                 this.isActive = e.type   
+                 this.isActive = e.type
                  if(e.type=='更多'){
                      this.isPop = true
-                     
+
                  }else{
                      this.isPop = false
                  }
@@ -512,14 +512,14 @@ right: 15px;" id="popover283313">
                 //     name: this.filters.name
                 // };
                 this.listLoading = true;
-               
+
                 this.$http.get('http://shareholder.a10store.com/api/expense.list.get.php').then(response => {
                     this.jsonBody = response.body
                    this.data1 = response.body.expense_list
                 }, response => {
                     // error callback
                 });
-    
+
                 // console.log(para);
                 // getUserListPage(para).then((res) => {
                 //     this.total = res.data.total;
@@ -549,7 +549,7 @@ right: 15px;" id="popover283313">
                         this.getUsers();
                     });
                 }).catch(() => {
-    
+
                 });
             },
             //显示编辑界面
@@ -636,7 +636,7 @@ right: 15px;" id="popover283313">
                         this.getUsers();
                     });
                 }).catch(() => {
-    
+
                 });
             }
         },
@@ -648,6 +648,9 @@ right: 15px;" id="popover283313">
 </script>
 
 <style scoped>
+#app{
+  overflow:hidden
+}
 .member-menu-view .popover-content li > a > .avatar, .member-menu-view .popover-content li > a > .icon {
     width: 24px;
     height: 24px;
@@ -936,8 +939,8 @@ li {
     line-height: 30px;
 }
 .entry-creator-modal-view .entry-tags-set, .entry-creator-modal-view .entry-involve-set {
- 
-    
+
+
 }.involve-view {
     position: relative;
 
@@ -948,11 +951,11 @@ li {
      margin-bottom:10px;
  border-bottom: 1px solid #E5E5E5;
 }.involve-view .involve-members {
- 
+
 }.involve-view .involve-members > li {
     position: relative;
     float: left;
-   
+
     cursor: pointer;
 }.involve-view .involve-members > li > .avatar {
     display: block;
@@ -1021,7 +1024,7 @@ li {
     .ivu-table-fixed-right {
         bottom: 0
     }
-    
+
     .toolbar {
         background: #f2f2f2;
         padding: 10px;
