@@ -129,18 +129,20 @@ right: 15px;" id="popover283313">
         <div class="menu-input">
           <input class="filter-input form-control" placeholder="查找成员"></div>
         <ul class="list-unstyled thin-scroll">
-          <li class="member-item all active">
+          <li class="member-item all active" @click="toapendAll(allusers)">
             <a> <span class="icon icon-users icon-gray"></span> 所有成员 </a>
           </li>
-          <Checkbox-group v-model="allusers" v-for="member in allusers">
-          <li class="member-item one hinted"  :class="{selected:mesele==member.name}" @click="toapend(member)">
+
+          <li v-for="member in allusers" class="member-item one hinted"  :class="{selected:member.selected}" @click="toapend(member,$index)">
             <a>
-              <div class="avatar img-circle" :style="{backgroundImage: 'url(' + member.srclink + ')'}"></div>
-              <span>{{member.name}}</span> </a>
-       <Checkbox  class="icon-selected"></Checkbox>
-            <!-- <Icon type="checkmark" class="icon-selected" v-show="mesele==member.name"></Icon> -->
+              <div class="avatar img-circle" :style="{backgroundImage: 'url(' + member.avatar + ')'}"></div>
+              <!-- <Checkbox :label="member.name" class="popcheckbox">
+              </Checkbox> -->
+              <span>{{member.name}}</span>
+              </a>
+
+            <Icon type="checkmark" class="icon-selected" v-if="member.selected"></Icon>
           </li>
-        </Checkbox-group>
 
         </ul>
       </div>
@@ -202,17 +204,17 @@ export default {
       allusers: [{
           name: 'linmens',
           selected: true,
-          srclink: 'https://striker.teambition.net/thumbnail/110c368fba8ff41a064151f70ca78c81e561/w/200/h/200'
+          avatar: 'https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png'
         },
         {
           name: 'ein',
           selected: false,
-          srclink: 'https://striker.teambition.net/thumbnail/110cd08dd69c864236237f5c69abeb893469/w/200/h/200'
+          avatar: 'https://striker.teambition.net/thumbnail/110cd08dd69c864236237f5c69abeb893469/w/200/h/200'
         },
         {
           name: 'cmi',
           selected: false,
-          srclink: 'https://striker.teambition.net/thumbnail/110c368fba8ff41a064151f70ca78c81e561/w/200/h/200'
+          avatar: 'https://striker.teambition.net/thumbnail/110c368fba8ff41a064151f70ca78c81e561/w/200/h/200'
         },
       ],
       jsonBody: [],
@@ -460,13 +462,32 @@ export default {
     }
   },
   methods: {
-    toapend(user) {
+    toapendAll(all){
+      var newJson = []
+      all.click = !all.click
+      //如果为true 则把所有状态更改为selected 并且push新数据
+      if(all.click){
+        all.forEach(function(item) {　　　　　　　　　　
+          Vue.set(item, 'selected', true);
+        　　　　　
+        });
+        console.log(all);
+        this.users = all
+      }else {
+        all.forEach(function(item) {　　　　　　　　　　
+          Vue.set(item, 'selected', false);　　　　　　　　
+        });
+          this.users = []
+      }
+    },
+    toapend:function(user,index) {
       console.log(user);
-      user.selected = true
-      var pus = [{
-        avatar: user.srclink
-      }]
-      this.mesele = user.name
+      user.selected = !user.selected
+      if(user.selected){
+        this.users.push({avatar:user.avatar})
+      }else {
+        this.users.splice(index, 1);
+      }
     },
     rowClick(row) {
       console.log(row)
@@ -687,18 +708,17 @@ export default {
     this.getList()
     let user = JSON.parse(sessionStorage.getItem('user'));
     this.users.push(user)
-    // this.users = user || ''
-    console.log(this.users);
-
+  console.log(user);
     this.boxHeight = this.$store.state.boxHeight
   }
 }
 </script>
 
 <style scoped>
-#app {
-  overflow: hidden
+.popcheckbox{
+  width:100%
 }
+
 
 .member-menu-view .popover-content li>a>.avatar,
 .member-menu-view .popover-content li>a>.icon {
