@@ -57,43 +57,43 @@
       <Icon type="information-circled"></Icon>
       <span class="modal-title">记录支出</span>
     </p>
-    <div class="entry-creator-view fade ui-droppable in">
-      <Form :model="formItem" class="entry-creator-form">
+    <div class="entry-creator-view fade ui-droppable in" @click="toClosePop($event)">
+      <Form :model="zhichuItem" class="entry-creator-form">
         <div class="entry-category">
           <ul class="entry-category-select expense">
             <li v-for="(icon, index) in entry" :class="{ active: isActive == icon.type }" class="entry-category-option">
-              <div class="entry-icon" @click="changeicon(icon)"></div>
+              <div class="entry-icon" :data-type="icon.type" @click="changeicon(icon)"></div>
               <span class="entry-category-title">{{icon.type}}</span>
             </li>
 
           </ul>
         </div>
         <Form-item>
-          <Input v-model="formItem.input" placeholder="内容"></Input>
+          <Input v-model="zhichuItem.neirong" placeholder="交易对象"></Input>
         </Form-item>
         <Form-item>
           <Row>
             <Col span="11">
-            <Input v-model="formItem.input" placeholder="金额"></Input>
+            <Input v-model="zhichuItem.price" placeholder="金额"></Input>
             </Col>
             <Col span="2" style="text-align: center">-</Col>
             <Col span="11">
-            <Date-picker type="date" placeholder="今天"></Date-picker>
+            <Date-picker type="date" v-model="zhichuItem.date" placeholder="今天"></Date-picker>
             </Col>
           </Row>
         </Form-item>
         <Form-item>
-          <Input v-model="formItem.input" type="textarea" :rows="4" placeholder="备注"></Input>
+          <Input v-model="zhichuItem.beizhu" type="textarea" :rows="4" placeholder="备注"></Input>
         </Form-item>
 
         <div class="entry-involve-set">
           <div class="involve-view">
             <div class="involve-header"> <span>参与者</span> </div>
             <Row type="flex" justify="start" class="code-row-bg">
-              <Col span="24" class="involve-member"> {{users}}
+              <Col span="24" class="involve-member">
               <!-- <img :src="users[0].avatar" class="avatar img-circle" width="24" v-if="users.length==1"> -->
               <img v-for="us in users" :src="us.avatar" class="avatar img-circle" width="24">
-              <span @click="openmemberPop"><Icon type="plus-circled addhandle" ></Icon></span>
+              <span @click="openmemberPop"><Icon type="plus-circled addhandle" data-type="更多"></Icon></span>
               </Col>
             </Row>
             <ul class="involve-members clearfix">
@@ -108,7 +108,7 @@
 
 
     <div slot="footer">
-      <Button type="info" size="large" long>创建</Button>
+      <Button type="info" size="small" @click="submitAdd()">创建</Button>
     </div>
 
     <div class="popover popover-menu-view bottom in" v-if="isPop" style="width: 242px; z-index: 999; top: 150px; position: absolute;
@@ -129,17 +129,18 @@ right: 15px;" id="popover283313">
         <div class="menu-input">
           <input class="filter-input form-control" placeholder="查找成员"></div>
         <ul class="list-unstyled thin-scroll">
-          <li class="member-item all active" @click="toapendAll(allusers)">
+          <li class="member-item all active" :class="{selected:allclick}" @click="toapendAll(allusers)">
             <a> <span class="icon icon-users icon-gray"></span> 所有成员 </a>
+            <Icon type="checkmark" class="icon-selected" v-if="allclick"></Icon>
           </li>
 
-          <li v-for="member in allusers" class="member-item one hinted"  :class="{selected:member.selected}" @click="toapend(member,$index)">
+          <li v-for="member in allusers" class="member-item one hinted" :class="{selected:member.selected}" @click="toapend(member,$index)">
             <a>
               <div class="avatar img-circle" :style="{backgroundImage: 'url(' + member.avatar + ')'}"></div>
               <!-- <Checkbox :label="member.name" class="popcheckbox">
               </Checkbox> -->
               <span>{{member.name}}</span>
-              </a>
+            </a>
 
             <Icon type="checkmark" class="icon-selected" v-if="member.selected"></Icon>
           </li>
@@ -200,6 +201,7 @@ export default {
   data() {
     return {
       users: [],
+      allclick: false,
       mesele: 'linmens',
       allusers: [{
           name: 'linmens',
@@ -238,16 +240,13 @@ export default {
       answer: [],
       SaoMa: '',
       isActive: '餐饮',
-      formItem: {
-        input: '',
-        select: '',
-        radio: 'male',
-        checkbox: [],
-        switch: true,
+      zhichuItem: {
+        neirong: '',
+        price: '',
         date: '',
-        time: '',
-        slider: [20, 50],
-        textarea: ''
+        beizhu: '',
+        type: '',
+        inuser: ''
       },
       entry: [{
         type: '餐饮',
@@ -462,43 +461,66 @@ export default {
     }
   },
   methods: {
-    toapendAll(all){
+    toapendAll(all) {
       var newJson = []
       all.click = !all.click
+      var _this = this
+      this.allclick = all.click
+      console.log(this.allclick);
       //如果为true 则把所有状态更改为selected 并且push新数据
-      if(all.click){
+      if (all.click) {
         all.forEach(function(item) {　　　　　　　　　　
-          Vue.set(item, 'selected', true);
-        　　　　　
+          Vue.set(item, 'selected', true);　　　　
+          newJson.push(item)
         });
-        console.log(all);
-        this.users = all
-      }else {
+        console.log(newJson);
+        this.users = newJson
+      } else {
         all.forEach(function(item) {　　　　　　　　　　
           Vue.set(item, 'selected', false);　　　　　　　　
         });
-          this.users = []
+        this.users = []
       }
+      this.zhichuItem.inuser = this.users
     },
-    toapend:function(user,index) {
+    toapend: function(user, index) {
       console.log(user);
       user.selected = !user.selected
-      if(user.selected){
-        this.users.push({avatar:user.avatar})
-      }else {
+      if (user.selected) {
+        this.users.push(user)
+      } else {
         this.users.splice(index, 1);
       }
+      if (this.users.length == this.allusers.length) { //如果当前选中的长度与原始长度一样 则显示所有勾选状态
+        console.log(this.allusers.length)
+        this.allclick = true
+      } else {
+        this.allclick = false
+      }
+      this.zhichuItem.inuser = this.users
+    },
+    submitAdd() {
+      console.log(this.zhichuItem);
     },
     rowClick(row) {
       console.log(row)
     },
     changeicon(e) {
+      console.log(this.zhichuItem.type);
+      this.zhichuItem.type = e.type
       this.isActive = e.type
       if (e.type == '更多') {
         this.isPop = true
 
       } else {
         this.isPop = false
+      }
+    },
+    toClosePop(ev) { //如果不是点击更多展示pop的方法则隐藏
+      console.log(ev);
+      if (ev.target.getAttribute('data-type') != '更多') {
+        this.isPop = false
+        this.isMemberPop = false
       }
     },
     senDsaoma: _.debounce(function(s) {
@@ -538,12 +560,14 @@ export default {
       this.menuitem.push(newItem)
     },
     openmemberPop() {
-      console.log('sdad')
-      this.isMemberPop = true
+      this.isMemberPop = !this.isMemberPop
     },
     selectedMenu(item, index) {
       this.isClicked = true
       this.isPop = false　
+      console.log(item);
+      this.zhichuItem.type = item.text
+      // this.zhichuItem.push(item)
       this.$nextTick(function() {　　　　　　　　
         this.menuitem.forEach(function(item) {　　　　　　　　　　
           Vue.set(item, 'menuitemActive', false);　　　　　　　　
@@ -708,15 +732,16 @@ export default {
     this.getList()
     let user = JSON.parse(sessionStorage.getItem('user'));
     this.users.push(user)
-  console.log(user);
+    console.log(user);
+    this.zhichuItem.inuser = this.users
     this.boxHeight = this.$store.state.boxHeight
   }
 }
 </script>
 
 <style scoped>
-.popcheckbox{
-  width:100%
+.popcheckbox {
+  width: 100%
 }
 
 
